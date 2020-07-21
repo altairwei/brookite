@@ -10,3 +10,8 @@ Description: Useful bioinformation tools for R.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports: 
+    dplyr,
+    biomaRt,
+    magrittr
+RoxygenNote: 7.1.0
