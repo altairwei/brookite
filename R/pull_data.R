@@ -57,7 +57,6 @@ pull_data_from_biomart <- function(
 #' @export
 default_biomart_attributes <- c(
     Description = "description",
-    Gene_ID = "ensembl_gene_id",
     GO_ID = "go_id",
     GO_Name = "name_1006",
     GO_Level = "namespace_1003"
@@ -107,9 +106,14 @@ pull_annotation <- function(
     dplyr::group_modify(function(x, y) {
       df <- apply(x, 2, FUN = collapse, collapse_sep, simplify = FALSE) %>%
         tibble::as_tibble()
-      names(df) <- names(default_biomart_attributes)
       df
     })
+
+  names(anno_collapse) <- ifelse(
+    names(anno_collapse) %in% dest_attrs,
+    names(dest_attrs)[match(names(anno_collapse), dest_attrs)],
+    names(anno_collapse)
+  )
 
   anno_collapse
 }
