@@ -2,5 +2,6 @@
 
 export("%>%")
 export(default_biomart_attributes)
+export(pull_annotation)
 export(pull_data_from_biomart)
 importFrom(magrittr,"%>%")

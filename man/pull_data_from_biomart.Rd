@@ -4,7 +4,13 @@
 \alias{pull_data_from_biomart}
 \title{Pull data table from biomart}
 \usage{
-pull_data_from_biomart(host, mart, dataset, dest_attrs, filename = NULL)
+pull_data_from_biomart(
+  host,
+  mart,
+  dataset,
+  dest_attrs = default_biomart_attributes,
+  filename = NULL
+)
 }
 \arguments{
 \item{host}{Host url such as plants.ensembl.org}

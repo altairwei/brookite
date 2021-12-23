@@ -64,17 +64,28 @@ default_biomart_attributes <- c(
 )
 
 # Collapse go_id and go_name
-collapse <- function(x) {
+collapse <- function(x, sep = "|") {
     if (all(x == "")) {
         return("-")
     } else {
-        return(paste(unique(x), collapse = "|"))
+        return(paste(unique(x), collapse = sep))
     }
 }
 
+#' Pull Annotation from BioMart
+#'
+#' @param genes Ensembl gene id
+#' @param mart_info A list contains BioMart information:
+#' \code{host}, \code{mart} and \code{dataset}
+#' @param dest_attrs BioMart attributes to pull down
+#' @param collapse_sep Separator for collapsed attributes
+#' @return a tibble
+#'
+#' @export
 pull_annotation <- function(
   genes, mart_info,
-  dest_attrs = default_biomart_attributes
+  dest_attrs = default_biomart_attributes,
+  collapse_sep = "|"
 ) {
   dataset_conn <- biomaRt::useMart(
     mart_info$mart,
@@ -94,7 +105,7 @@ pull_annotation <- function(
     tibble::as_tibble() %>%
     dplyr::group_by(ensembl_gene_id) %>%
     dplyr::group_modify(function(x, y) {
-      df <- apply(x, 2, collapse, simplify = FALSE) %>%
+      df <- apply(x, 2, FUN = collapse, collapse_sep, simplify = FALSE) %>%
         tibble::as_tibble()
       names(df) <- names(default_biomart_attributes)
       df

@@ -14,5 +14,5 @@ Imports:
     dplyr,
     biomaRt,
     magrittr
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.2
 biocViews: Software
