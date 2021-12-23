@@ -5,7 +5,7 @@
 \alias{default_biomart_attributes}
 \title{Default biomart attributes to retrieve}
 \format{
-An object of class \code{character} of length 5.
+An object of class \code{character} of length 4.
 }
 \usage{
 default_biomart_attributes
