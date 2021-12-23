@@ -76,6 +76,7 @@ collapse <- function(x, sep = "|") {
 #' @param genes Ensembl gene id
 #' @param mart_info A list contains BioMart information:
 #' \code{host}, \code{mart} and \code{dataset}
+#' @param filter Filter name used to query BioMart
 #' @param dest_attrs BioMart attributes to pull down
 #' @param collapse_sep Separator for collapsed attributes
 #' @return a tibble
@@ -83,6 +84,7 @@ collapse <- function(x, sep = "|") {
 #' @export
 pull_annotation <- function(
   genes, mart_info,
+  filter = "ensembl_gene_id",
   dest_attrs = default_biomart_attributes,
   collapse_sep = "|"
 ) {
@@ -93,8 +95,8 @@ pull_annotation <- function(
   )
 
   anno <- biomaRt::getBM(
-      attributes = dest_attrs,
-      filters = "ensembl_gene_id",
+      attributes = c(filter, dest_attrs),
+      filters = filter,
       values = genes,
       mart = dataset_conn,
       quote = "\""
@@ -102,7 +104,7 @@ pull_annotation <- function(
 
   anno_collapse <- anno %>%
     tibble::as_tibble() %>%
-    dplyr::group_by(ensembl_gene_id) %>%
+    dplyr::group_by(.data[[filter]]) %>%
     dplyr::group_modify(function(x, y) {
       df <- apply(x, 2, FUN = collapse, collapse_sep, simplify = FALSE) %>%
         tibble::as_tibble()

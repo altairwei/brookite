@@ -7,6 +7,7 @@
 pull_annotation(
   genes,
   mart_info,
+  filter = "ensembl_gene_id",
   dest_attrs = default_biomart_attributes,
   collapse_sep = "|"
 )
@@ -16,6 +17,8 @@ pull_annotation(
 
 \item{mart_info}{A list contains BioMart information:
 \code{host}, \code{mart} and \code{dataset}}
+
+\item{filter}{Filter name used to query BioMart}
 
 \item{dest_attrs}{BioMart attributes to pull down}
 
