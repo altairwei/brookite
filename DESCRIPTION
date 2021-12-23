@@ -1,6 +1,6 @@
-Package: rbioinfotools
+Package: brookite
 Title: Useful bioinformation tools for R.
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: 
     person(given = "Altair",
            family = "Wei",
@@ -15,3 +15,4 @@ Imports:
     biomaRt,
     magrittr
 RoxygenNote: 7.1.0
+biocViews: Software
