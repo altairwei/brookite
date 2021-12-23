@@ -56,8 +56,49 @@ pull_data_from_biomart <- function(
 #' Default biomart attributes to retrieve
 #' @export
 default_biomart_attributes <- c(
+    Description = "description",
     Gene_ID = "ensembl_gene_id",
     GO_ID = "go_id",
     GO_Name = "name_1006",
     GO_Level = "namespace_1003"
 )
+
+# Collapse go_id and go_name
+collapse <- function(x) {
+    if (all(x == "")) {
+        return("-")
+    } else {
+        return(paste(unique(x), collapse = "|"))
+    }
+}
+
+pull_annotation <- function(
+  genes, mart_info,
+  dest_attrs = default_biomart_attributes
+) {
+  dataset_conn <- biomaRt::useMart(
+    mart_info$mart,
+    dataset = mart_info$dataset,
+    host = mart_info$host
+  )
+
+  anno <- biomaRt::getBM(
+      attributes = dest_attrs,
+      filters = "ensembl_gene_id",
+      values = genes,
+      mart = dataset_conn,
+      quote = "\""
+  )
+
+  anno_collapse <- anno %>%
+    tibble::as_tibble() %>%
+    dplyr::group_by(ensembl_gene_id) %>%
+    dplyr::group_modify(function(x, y) {
+      df <- apply(x, 2, collapse, simplify = FALSE) %>%
+        tibble::as_tibble()
+      names(df) <- names(default_biomart_attributes)
+      df
+    })
+
+  anno_collapse
+}
