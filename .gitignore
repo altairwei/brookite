@@ -2,3 +2,4 @@
 .RData
 .Rproj.user
 .vscode
+renv/settings.dcf
