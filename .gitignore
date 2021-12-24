@@ -3,3 +3,6 @@
 .Rproj.user
 .vscode
 renv/settings.dcf
+org.*
+
+.tmp/

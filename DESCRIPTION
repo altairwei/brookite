@@ -13,6 +13,7 @@ LazyData: true
 Imports: 
     dplyr,
     biomaRt,
-    magrittr
+    magrittr,
+    AnnotationForge
 RoxygenNote: 7.1.2
 biocViews: Software
