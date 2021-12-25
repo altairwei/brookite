@@ -250,17 +250,19 @@ p_makeOrgPackage <- function(
 #'
 #' @inheritParams AnnotationForge::makeOrgPackage
 #' @param gid_type the type of central identifier.
-#' @param mart which BioMart database to use. Get the list of all available
-#' BioMart databases with the \code{\link[biomaRt]{listMarts}} function from
-#' the biomaRt package.
-#' @param dataset which dataset from BioMart.
-#' @param host The host URL of the BioMart.
+#' @param biomart A \link[biomaRt]{Mart-class} object returned by
+#' \code{\link[biomaRt]{useMart}} etc.
 #' @export
 #' @examples
-#' makeOrgDbFromBiomart(
-#'   mart = "plants_mart",
+#' mart <- biomaRt::useMart(
+#'   biomart = "plants_mart",
+#'   version = "Ensembl Plants Genes 52",
 #'   dataset = "taestivum_eg_gene",
-#'   host = "https://plants.ensembl.org",
+#'   host = "https://plants.ensembl.org"
+#' )
+#'
+#' makeOrgDbFromBiomart(
+#'   biomart = mart,
 #'   version = "0.0.0.9000",
 #'   maintainer = "Altair Wei <altair_wei@outlook.com>",
 #'   author = "Altair Wei <altair_wei@outlook.com>",
@@ -271,6 +273,7 @@ p_makeOrgPackage <- function(
 #'   gid_type = "iwgsc"
 #' )
 makeOrgDbFromBiomart <- function(
+  biomart,
   tax_id,
   maintainer,
   author,
@@ -278,16 +281,11 @@ makeOrgDbFromBiomart <- function(
   species = NULL,
   version = "0.0.0.9000",
   gid_type = "eg",
-  mart = "ENSEMBL_MART_ENSEMBL",
-  dataset = "hsapiens_gene_ensembl",
-  host = "www.ensembl.org",
   outputDir = getwd()
 ) {
-  dataset_conn <- biomaRt::useMart(
-    mart,
-    dataset = dataset,
-    host = host
-  )
+  stopifnot(inherits(biomart, "Mart"))
+
+  dataset_conn <- biomart
 
   anno <- biomaRt::getBM(
       attributes = c(
@@ -299,7 +297,8 @@ makeOrgDbFromBiomart <- function(
         "go_linkage_type" # EVIDENCE
       ),
       filters = "chromosome_name",
-      values = biomaRt::keys(dataset_conn, keytype = "chromosome_name"),
+      values = biomaRt::listFilterOptions(
+        mart = dataset_conn, filter = "chromosome_name"),
       mart = dataset_conn,
       quote = "\""
   )

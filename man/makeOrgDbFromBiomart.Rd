@@ -5,6 +5,7 @@
 \title{Make a OrgDb package from annotations available on a BioMart database}
 \usage{
 makeOrgDbFromBiomart(
+  biomart,
   tax_id,
   maintainer,
   author,
@@ -12,13 +13,13 @@ makeOrgDbFromBiomart(
   species = NULL,
   version = "0.0.0.9000",
   gid_type = "eg",
-  mart = "ENSEMBL_MART_ENSEMBL",
-  dataset = "hsapiens_gene_ensembl",
-  host = "www.ensembl.org",
   outputDir = getwd()
 )
 }
 \arguments{
+\item{biomart}{A \link[biomaRt]{Mart-class} object returned by
+\code{\link[biomaRt]{useMart}} etc.}
+
 \item{tax_id}{The Taxonomy ID that represents your organism.  (NCBI has
   a nice online browser for finding the one you need)}
 
@@ -35,24 +36,21 @@ makeOrgDbFromBiomart(
 
 \item{gid_type}{the type of central identifier.}
 
-\item{mart}{which BioMart database to use. Get the list of all available
-BioMart databases with the \code{\link[biomaRt]{listMarts}} function from
-the biomaRt package.}
-
-\item{dataset}{which dataset from BioMart.}
-
-\item{host}{The host URL of the BioMart.}
-
 \item{outputDir}{A path where the package source should be assembled.}
 }
 \description{
 Make a OrgDb package from annotations available on a BioMart database
 }
 \examples{
-makeOrgDbFromBiomart(
-  mart = "plants_mart",
+mart <- biomaRt::useMart(
+  biomart = "plants_mart",
+  version = "Ensembl Plants Genes 52",
   dataset = "taestivum_eg_gene",
-  host = "https://plants.ensembl.org",
+  host = "https://plants.ensembl.org"
+)
+
+makeOrgDbFromBiomart(
+  biomart = mart,
   version = "0.0.0.9000",
   maintainer = "Altair Wei <altair_wei@outlook.com>",
   author = "Altair Wei <altair_wei@outlook.com>",
