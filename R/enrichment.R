@@ -231,7 +231,7 @@ compareGSEA <- function(ranked_clusters, ...) {
   new("compareClusterResult",
     compareClusterResult = df,
     geneClusters = ranked_clusters,
-    fun = "GSEA",
+    fun = "enrichGO", # Make simplify work.
     .call = match.call(expand.dots = TRUE)
   )
 }
@@ -336,7 +336,7 @@ gseaCompareDotplot <- function(
     ggplot2::geom_point(ggplot2::aes_string(color = "p.adjust")) +
     ggplot2::scale_color_continuous(
       low = "red", high = "blue",
-      guide = ggplot2::guide_colorbar(reverse=TRUE)) +
+      guide = ggplot2::guide_colorbar(reverse = TRUE)) +
     ggplot2::ylab(NULL) +
     ggplot2::ggtitle(title) +
     DOSE::theme_dose(font_size) +
