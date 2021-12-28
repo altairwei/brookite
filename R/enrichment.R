@@ -212,12 +212,12 @@ enrich_cnetplot <- function(
 #' Perform GSEA on gene clusters.
 #'
 #' @param ranked_clusters a list of ranked logFC vector.
-#' @param ... pass to \code{\link[clusterProfiler]{GSEA}}
+#' @param ... pass to \code{\link[clusterProfiler]{gseGO}}
 #' @return A un-official \code{compareClusterResult} object
 #' @export
-enrich_compare_gsea <- function(ranked_clusters, ...) {
+compareGSEA <- function(ranked_clusters, ...) {
   gsea_list <- lapply(ranked_clusters, function(i) {
-    x <- suppressMessages(clusterProfiler::GSEA(i, ...))
+    x <- suppressMessages(clusterProfiler::gseGO(i, ...))
     if (class(x) == "gseaResult") {
       as.data.frame(x)
     }
@@ -276,7 +276,7 @@ ep_str_wrap <- function(string, width) {
 #'  longer that 30 characters
 #' @param title plot title
 #' @export
-dotplot_for_gsea <- function(
+gseaCompareDotplot <- function(
   object,
   show_category = 5,
   font_size = 12,

@@ -315,6 +315,12 @@
       "Repository": "CRAN",
       "Hash": "ebaa97ac99cc2daf04e77eecc7b781d7"
     },
+    "clusterProfiler": {
+      "Package": "clusterProfiler",
+      "Version": "4.2.1",
+      "Source": "Bioconductor",
+      "Hash": "e330050506dafd2d4766d2e1914f8573"
+    },
     "colorspace": {
       "Package": "colorspace",
       "Version": "2.0-2",
@@ -405,6 +411,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "cf6b206a045a684728c3267ef7596190"
+    },
+    "downloader": {
+      "Package": "downloader",
+      "Version": "0.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "f4f2a915e0dedbdf016a83b63477349f"
     },
     "dplyr": {
       "Package": "dplyr",

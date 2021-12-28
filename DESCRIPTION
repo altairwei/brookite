@@ -17,6 +17,7 @@ Imports:
     AnnotationForge,
     ggplot2,
     enrichplot,
-    cowplot
+    cowplot,
+    clusterProfiler
 RoxygenNote: 7.1.2
 biocViews: Software
