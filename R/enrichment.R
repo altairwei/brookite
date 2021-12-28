@@ -327,7 +327,7 @@ dotplot_for_gsea <- function(
     ep_str_wrap(str, label_format)
   }
 
-  if(is.function(label_format)) {
+  if (is.function(label_format)) {
       label_func <- label_format
   }
 
