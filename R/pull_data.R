@@ -64,7 +64,7 @@ default_biomart_attributes <- c(
 
 # Collapse go_id and go_name
 collapse <- function(x, sep = "|") {
-    if (is.na(x) || all(x == "")) {
+    if (all(is.na(x)) || all(x == "")) {
         return("-")
     } else {
         return(paste(unique(x), collapse = sep))
